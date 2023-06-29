@@ -11,6 +11,8 @@ const personas = [
     { id: 10, nombre: 'Valentina', edad: 30, numeroMascotas: 3 },
   ];
   
+const ESPECIES = ["Perro", "Gato", "Conejo", "Pájaro", "Tortuga"];
+  
   function generarDataPersona() {
     const dataPersona = [];
     for (let i = 0; i < personas.length; i++) {
@@ -26,7 +28,6 @@ const personas = [
   }
   
   function generarDataMascota(cantidadMascotas) {
-    const especies = ["Perro", "Gato", "Conejo", "Pájaro", "Tortuga"];
     const nombres = ["Danna", "Bambi", "Lucas", "Toby", "Simba", "Thor", "Max", "Linda", "Chispa", "Luna"];
     const sexos = ["Macho", "Hembra"];
     const dataPersona = generarDataPersona();
@@ -34,7 +35,7 @@ const personas = [
     const dataMascota = [];
     for (let i = 0; i < cantidadMascotas && i < dataPersona.length; i++) {
       const nombreMascota = nombres[Math.floor(Math.random() * nombres.length)];
-      const especie = especies[Math.floor(Math.random() * especies.length)];
+      const especie = ESPECIES[Math.floor(Math.random() * ESPECIES.length)];
       const id_dueño = dataPersona[i].id;
       const sexo = sexos[Math.floor(Math.random() * sexos.length)];
       dataMascota.push({ nombreMascota, especie, id_dueño, sexo });
@@ -45,4 +46,4 @@ const personas = [
 
   const dataPersona = generarDataPersona();
   const dataMascota = generarDataMascota(10);
-  export default (dataMascota, dataPersona)
+  export default (dataMascota, dataPersona, ESPECIES)

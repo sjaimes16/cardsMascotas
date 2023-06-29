@@ -7,6 +7,7 @@ import NewPage from './components/NewPage';
 import NewComponentePage from './components/NewComponentePage';
 import Mascotas from './components/Mascotas';
 import Persona from './components/Persona';
+import Especies from './components/Especies';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/contact" element={<ContactPage/>}/>
         <Route exact path="/new" element={<NewPage/>}/>
         <Route exact path="/newPage" element={<NewComponentePage/>}/>
+        <Route exact path="/especies" element={<Especies/>}/>
         <Route exact path="/mascota" element={<Mascotas/>}/>
         <Route exact path="/persona" element={<Persona/>}/>
       </Routes>

@@ -15,6 +15,7 @@ const Navbar = () => {
             <li><Link to="/newPage">New Page Component</Link></li>
             <li><Link to="/persona">Persona</Link></li>
             <li><Link to="/mascota">Mascota</Link></li>
+            <li><Link to="/especies">Especies</Link></li>
           </ul>
 	    </header>
     </>
