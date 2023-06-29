@@ -6,7 +6,7 @@ const NewPage = () => {
     <div>
     <Navbar />
     <p>Esta es la pagina esta es mi nueva pagina</p> 
-    <img className="imagen" src='src/assets/newpage.png' />
+    <img className="imagen" src='./src/assets/newpage.png' />
     
   </div>
   )
