@@ -1,8 +1,9 @@
 import React from 'react'
 import Navbar from './Navbar';
-import dataPersona from '../utils/generate_data'
+import { dataPersona } from '../utils/generate_data'
 
 const Persona = () => {
+  console.log('dataPersona', dataPersona)
   return (
     <>
       <Navbar />

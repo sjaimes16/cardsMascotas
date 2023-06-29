@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
-import ESPECIES from '../utils/generate_data'
+import { ESPECIES } from '../utils/generate_data'
 
 const Especies = () => {
   const dataEspecie = ESPECIES

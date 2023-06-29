@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
-import dataMascota from '../utils/generate_data'
+import { dataMascota } from '../utils/generate_data'
 
 const Mascotas = () => {
 
