@@ -12,10 +12,10 @@ body
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	background: #282828;
+	background: #282828 !important;
 }
 h1 {
-    color: #fff;
+    color: #fff !important;
     text-align: center;
 }
 p {

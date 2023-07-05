@@ -10,6 +10,7 @@ import Persona from './components/Persona';
 import Especies from './components/Especies';
 import Ubicaciones from './components/Ubicaciones';
 import Testimonios from './components/Testimonios';
+import PesoMascotas from './components/PesoMascotas';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/persona" element={<Persona/>}/>
         <Route exact path="/ubicaciones" element={<Ubicaciones/>}/>
         <Route exact path="/testimonios" element={<Testimonios/>}/>
+        <Route exact path="/pesoMascotas" element={<PesoMascotas/>}/>
       </Routes>
     </Router>
     </>

@@ -18,6 +18,7 @@ const Navbar = () => {
             <li><Link to="/especies">Especies</Link></li>
             <li><Link to="/ubicaciones">Ubicaciones</Link></li>
             <li><Link to="/testimonios">Testimonios</Link></li>
+            <li><Link to="/pesoMascotas">Peso mascotas</Link></li>
           </ul>
 	    </header>
     </>

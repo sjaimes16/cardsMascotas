@@ -1,12 +1,13 @@
 import React from 'react'
 import Navbar from './Navbar'
+import newpage from '../assets/newpage.png';
 
 const NewPage = () => {
   return (
     <div>
     <Navbar />
     <p>Esta es la pagina esta es mi nueva pagina</p> 
-    <img className="imagen" src='src/assets/newpage.png' />
+    <img className="imagen" src={newpage} />
     
   </div>
   )
