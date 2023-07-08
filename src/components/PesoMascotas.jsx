@@ -2,89 +2,174 @@ import React, {useState} from 'react'
 import Navbar from './Navbar';
 
 const PesoMascotas = () => {
-  const [tipoAlimento, setTipoAlimento] = useState('');
-  const [pesoMascota, setPesoMascota] = useState('');
-  const [cantidadAlimento, setCantidadAlimento] = useState('');
-  const [tablaDatos, setTablaDatos] = useState([]);
+  const [animal, setAnimal]=useState('')
+  const [cantidad, setCantidad]=useState('-')
+  const [alimento, setAlimento]=useState('-')
+  const [peso, setPeso]=useState('-')
 
   const tablaConversion = {
-    dogChow: 0.02,
-    nucan: 0.03,
-    pedigree: 0.04
-  };
+      perro: {
+          nutrecan: {
+              0: "50-100",
+              5: "100-200",
+              10: "200-300",
+              20: "300-400",
+              30: "400-500",
+              40: "500+"
+          },
+          dogchow: {
+              0: "50-100",
+              5: "80-150",
+              10: "150-200",
+              15: "200-250",
+              20: "250-350",
+              30: "350+",
+          },
+           agility: {
+              0: "30-50",
+              3: "50-80",
+              5: "80-110",
+              7: "110-150",
+              10: "150+",
+          }
+      },
+      gato: {
+          agility: {
+              0: "30-50",
+              3: "50-80",
+              5: "80-110",
+              7: "110-150",
+              10: "150+",
+          },
+          dogchow: {
+              0: "50-100",
+              5: "80-150",
+              10: "150-200",
+              15: "200-250",
+              20: "250-350",
+              30: "350+",
+          },
+      }
+  }
 
-  const handleTipoAlimentoChange = (event) => {
-    setTipoAlimento(event.target.value);
-  };
+  function Calcular(){
+      let total=''
+      const animalData = tablaConversion[animal]
+      if (animalData) {
+          const alimentoData = animalData[alimento]
+          if (alimentoData) {
+              for ( const [key, value] of Object.entries(alimentoData)) {
+                  if (key < peso) {
+                      total = value 
+                  }      
+              }
+          }
+      }
+      
+      setCantidad(total)
+  }
 
-  const handlePesoMascotaChange = (event) => {
-    setPesoMascota(event.target.value);
-  };
+  function eleccionAnimal(e){
+      const animal=e.target.value
+      setAnimal(animal)
+  }
 
-  const handleCalcularClick = () => {
-    const factorConversion = tablaConversion[tipoAlimento];
-    const cantidadCalculada = factorConversion * pesoMascota;
+  function valorPeso(e){
+      const peso=e.target.value
+      setPeso(peso)
+  }
 
-    setCantidadAlimento(cantidadCalculada.toFixed(2));
+  function eleccionComida(e){
+      const eleccion=e.target.value
+      setAlimento(eleccion)
+  }
 
-    // Guardar los datos en la tabla
-    const datos = {
-      tipoAlimento,
-      pesoMascota,
-      cantidadAlimento: cantidadCalculada.toFixed(2)
-    };
-    setTablaDatos([...tablaDatos, datos]);
-  };
+  function getMascotaOptios(){
+      let options = [
+      ]
+      for ( const [key, value] of Object.entries(tablaConversion)) {
+          options.push(
+              <option value={key}>{key}</option>
+          )             
+      }
 
-  return (
-    <>
+      return options
+  }
+
+  function getComidaOptios(){
+
+      let comidaSet = new Set();
+
+      for (const [key, value] of Object.entries(tablaConversion.perro)) {
+          comidaSet.add(key);
+      }
+
+      for (const [key, value] of Object.entries(tablaConversion.gato)) {
+          comidaSet.add(key);
+      }
+
+      let comida = Array.from(comidaSet).map((key) => (
+          <option value={key}>{key}</option>
+      ));
+
+      return comida;
+  }
+
+  return(
+      <div>
       <Navbar />
-      <h1>Calculadora de Alimento</h1>
-      <div>
-        <p>Tipo de alimento:</p>
-        <select className="form-select" value={tipoAlimento} onChange={handleTipoAlimentoChange}>
-          <option value="">Seleccione un tipo</option>
-          <option value="dogChow">Dog Chow</option>
-          <option value="nucan">Nucan</option>
-          <option value="pedigree">Pedigree</option>
-        </select>
-      </div>
-      <div>
-        <p>Peso de la mascota:</p>
-        <input type="number" className="form-control" value={pesoMascota} onChange={handlePesoMascotaChange} />
-      </div>
-      <div>
-        <button className="btn btn-primary mt-3" onClick={handleCalcularClick}>Calcular</button>
-      </div>
-      {cantidadAlimento && (
-        <div >
-          <p>Cantidad de alimento a proporcionar: {cantidadAlimento} kg</p>
-        </div>
-      )}
-      {tablaDatos.length > 0 && (
-        <div>
-          <h2>Tabla de datos:</h2>
-          <table className="table table-bordered table-hover">
-            <thead>
+      <h2>TABLA MASCOTA</h2>
+      <p className="text-center">Elige el tipo de alimento, tipo de mascota y digita el peso. Presiona calcular</p>
+      <div className="container">
+      <table className="table table-striped table-bordered text-center">
+          <thead>
               <tr>
-                <th>Tipo de alimento</th>
-                <th>Peso de la mascota</th>
-                <th>Cantidad de alimento</th>
+                  <th>Tipo Alimento</th>
+                  <th>Peso</th>
+                  <th>Cantidad Diaria</th>
               </tr>
-            </thead>
-            <tbody>
-              {tablaDatos.map((datos, index) => (
-                <tr key={index}>
-                  <td>{datos.tipoAlimento}</td>
-                  <td>{datos.pesoMascota}</td>
-                  <td>{datos.cantidadAlimento} kg</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>{alimento}</td>
+                  <td>{peso}</td>
+                  <td>{cantidad}</td>
+              </tr>
+          </tbody>
+          
+      </table>
+      </div>
+      <div className="formulario row">
+      <div className="col-6">
+      <select onChange={eleccionComida} className="form-select mb-3">
+          <option selected>Elige un tipo de alimento</option>
+          {
+              getComidaOptios()
+          }
+      </select>
+      </div>
+      <div className="col-6">
+      <select onChange={eleccionAnimal} className="form-select mb-3">
+          <option selected>Elige un tipo de mascota</option>
+          {
+              getMascotaOptios()
+          }
+      </select>
+      </div>
+      
+      <div class="input-group mb-3">
+      <span class="input-group-text" id="peso">Peso</span>
+      <input type="text" onChange={valorPeso} class="form-control" id="peso" placeholder="Digita peso mascota" />
+      </div>
+
+      <div className="text-center">
+      <button className="btn btn-lg btn-primary fw-bolder" onClick={Calcular}>Calcular</button>
+      </div>
+      
+      </div>
+      
+      </div>
+    // </>
   );
 };
 
