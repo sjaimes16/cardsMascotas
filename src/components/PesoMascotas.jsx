@@ -6,53 +6,55 @@ const PesoMascotas = () => {
   const [cantidad, setCantidad]=useState('-')
   const [alimento, setAlimento]=useState('-')
   const [peso, setPeso]=useState('-')
-
-  const tablaConversion = {
-      perro: {
-          nutrecan: {
-              0: "50-100",
-              5: "100-200",
-              10: "200-300",
-              20: "300-400",
-              30: "400-500",
-              40: "500+"
-          },
-          dogchow: {
-              0: "50-100",
-              5: "80-150",
-              10: "150-200",
-              15: "200-250",
-              20: "250-350",
-              30: "350+",
-          },
-           agility: {
-              0: "30-50",
-              3: "50-80",
-              5: "80-110",
-              7: "110-150",
-              10: "150+",
-          }
-      },
-      gato: {
-          agility: {
-              0: "30-50",
-              3: "50-80",
-              5: "80-110",
-              7: "110-150",
-              10: "150+",
-          },
-          dogchow: {
-              0: "50-100",
-              5: "80-150",
-              10: "150-200",
-              15: "200-250",
-              20: "250-350",
-              30: "350+",
-          },
-      }
-  }
+  const [tablaConversion, setTablaConversion] = useState({
+    perro: {
+        nutrecan: {
+            0: "50-100",
+            5: "100-200",
+            10: "200-300",
+            20: "300-400",
+            30: "400-500",
+            40: "500+"
+        },
+        dogchow: {
+            0: "50-100",
+            5: "80-150",
+            10: "150-200",
+            15: "200-250",
+            20: "250-350",
+            30: "350+",
+        },
+         agility: {
+            0: "30-50",
+            3: "50-80",
+            5: "80-110",
+            7: "110-150",
+            10: "150+",
+        }
+    },
+    gato: {
+        agility: {
+            0: "30-50",
+            3: "50-80",
+            5: "80-110",
+            7: "110-150",
+            10: "150+",
+        },
+        dogchow: {
+            0: "50-100",
+            5: "80-150",
+            10: "150-200",
+            15: "200-250",
+            20: "250-350",
+            30: "350+",
+        },
+    }
+})
+const [nuevoAlimento, setNuevoAlimento] = useState('');
+const [nuevasProporciones, setNuevasProporciones] = useState('');
 
   function Calcular(){
+    console.log(tablaConversion);
       let total=''
       const animalData = tablaConversion[animal]
       if (animalData) {
@@ -74,6 +76,49 @@ const PesoMascotas = () => {
       setAnimal(animal)
   }
 
+  function handleNuevoAlimento(e) {
+    const nuevoAlimento = e.target.value;
+    setNuevoAlimento(nuevoAlimento);
+  }
+
+  function handleNuevasProporciones(e) {
+    const nuevasProporciones = e.target.value;
+    setNuevasProporciones(nuevasProporciones);
+  }
+
+  function handleGuardar(e) {
+    e.preventDefault(); // Evitar el comportamiento de envío del formulario por defecto
+  
+    // Validar que se haya ingresado un nuevo alimento y las nuevas proporciones
+    if (nuevoAlimento.trim() === '' || nuevasProporciones.trim() === '') {
+      // Mostrar mensaje de error o realizar alguna acción adicional
+      return;
+    }
+  
+    // Convertir las proporciones a un objeto con una única clave-valor
+    const proporcionesObj = { [nuevasProporciones]: nuevasProporciones };
+  
+    // Actualizar el estado tablaConversion con los nuevos datos ingresados
+    setTablaConversion((prevTabla) => {
+      const animalData = prevTabla[animal];
+      if (animalData) {
+        return {
+          ...prevTabla,
+          [animal]: {
+            ...animalData,
+            [nuevoAlimento]: proporcionesObj,
+          },
+        };
+      }
+      return prevTabla;
+    });
+  
+    // Limpiar los campos del formulario después de guardar los datos
+    setNuevoAlimento('');
+    setNuevasProporciones('');
+  }
+  
+
   function valorPeso(e){
       const peso=e.target.value
       setPeso(peso)
@@ -89,7 +134,7 @@ const PesoMascotas = () => {
       ]
       for ( const [key, value] of Object.entries(tablaConversion)) {
           options.push(
-              <option value={key}>{key}</option>
+              <option value={key} key={key}>{key}</option>
           )             
       }
 
@@ -109,14 +154,14 @@ const PesoMascotas = () => {
       }
 
       let comida = Array.from(comidaSet).map((key) => (
-          <option value={key}>{key}</option>
+          <option value={key} key={key}>{key}</option>
       ));
 
       return comida;
   }
 
   return(
-      <div>
+      <>
       <Navbar />
       <h2>TABLA MASCOTA</h2>
       <p className="text-center">Elige el tipo de alimento, tipo de mascota y digita el peso. Presiona calcular</p>
@@ -167,8 +212,33 @@ const PesoMascotas = () => {
       </div>
       
       </div>
-      
-      </div>
+
+      <p className="text-center">Formulario</p>
+      <form>
+      <select onChange={eleccionAnimal} className="form-select mb-3">
+          <option selected>Elige un tipo de mascota</option>
+          {
+              getMascotaOptios()
+          }
+      </select>
+      <label>Escriba el nuevo alimento</label>
+        <input
+            type="text"
+            value={nuevoAlimento}
+            onChange={handleNuevoAlimento}
+        />
+
+        <label>Escriba las proporciones</label>
+        <textarea
+        value={nuevasProporciones}
+        onChange={handleNuevasProporciones}
+        ></textarea>
+
+        <button className="btn btn-primary" onClick={handleGuardar}>
+        Guardar
+        </button>
+      </form>
+      </>
     // </>
   );
 };
