@@ -226,13 +226,15 @@ const [nuevasProporciones, setNuevasProporciones] = useState('');
             type="text"
             value={nuevoAlimento}
             onChange={handleNuevoAlimento}
+            className='form-control'
         />
 
         <label>Escriba las proporciones</label>
-        <textarea
+        <input
         value={nuevasProporciones}
         onChange={handleNuevasProporciones}
-        ></textarea>
+        className='form-control'
+        />
 
         <button className="btn btn-primary" onClick={handleGuardar}>
         Guardar

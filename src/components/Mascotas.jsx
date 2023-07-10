@@ -53,46 +53,50 @@ const Mascotas = () => {
       </div>
       ))}
       </div>
-      <div className="container">
+      <div className="container row">
         <form onSubmit={handleSubmit}>
           <h2>Agregar Mascota</h2>
-          <label>
+          <label className='col-6'>
             ID dueño:
             <input
               type="text"
               name="id_dueño"
               value={nuevaMascota.id_dueño}
               onChange={handleInputChange}
+              className='form-control'
             />
           </label>
-          <label>
+          <label className='col-6'>
             Nombre mascota:
             <input
               type="text"
               name="nombreMascota"
               value={nuevaMascota.nombreMascota}
               onChange={handleInputChange}
+              className='form-control'
             />
           </label>
-          <label>
+          <label className='col-6'>
             Especie:
             <input
               type="text"
               name="especie"
               value={nuevaMascota.especie}
               onChange={handleInputChange}
+              className='form-control'
             />
           </label>
-          <label>
+          <label className='col-6'>
             Sexo:
             <input
               type="text"
               name="sexo"
               value={nuevaMascota.sexo}
               onChange={handleInputChange}
+              className='form-control'
             />
           </label>
-          <button type="submit">Agregar</button>
+          <button type="submit" className='btn btn-primary'>Agregar</button>
         </form>
       </div>
     </>
