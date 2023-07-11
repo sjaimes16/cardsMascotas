@@ -18,7 +18,6 @@ const Persona = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes realizar acciones con la nueva mascota, como enviarla al servidor o actualizar el estado de `mascotaInfo`
     setDataPersonaInfo((prevState) => [...prevState, nuevaPersona]);
     setNuevaPersona({
       id: '',

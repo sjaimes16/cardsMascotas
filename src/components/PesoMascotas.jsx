@@ -176,6 +176,7 @@ const PesoMascotas = () => {
 
     return (
         <>
+        <Navbar />
           <h2>TABLA MASCOTA</h2>
           <p className="text-center">
             Elige el tipo de alimento, tipo de mascota y digita el peso. Presiona calcular
