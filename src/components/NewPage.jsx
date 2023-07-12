@@ -4,23 +4,31 @@ const NewPage = () => {
   const [photos, setPhotos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('pets');
   const [pagina, setPagina] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(10);
+  const [searchClicked, setSearchClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para el loader
 
   useEffect(() => {
     const fetchPhotos = async () => {
+      setIsLoading(true); // Mostrar el loader al comenzar la consulta
+
       const response = await fetch(`https://api.pexels.com/v1/search?query=${searchQuery}&per_page=${pagina}&page=${currentPage}`, {
         headers: {
           Authorization: '44rNBmpRIGqc1Lq6mTdykiVE2ZbP5CXyAgWJpD6G9D6KzKlMHVwCixhB'
         }
       });
       const data = await response.json();
-      setPhotos(data.photos);
+      setTimeout(() => {
+        setPhotos(data.photos);
+        setIsLoading(false); // Ocultar el loader al finalizar la consulta
+      }, 5000);
     };
 
-    if (searchQuery !== '') {
+    if (searchClicked) {
       fetchPhotos();
+      setSearchClicked(false);
     }
-  }, [searchQuery, pagina, currentPage]);
+  }, [searchQuery, pagina, currentPage, searchClicked]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -28,7 +36,7 @@ const NewPage = () => {
 
   const handleSearchClick = () => {
     if (searchQuery !== '') {
-      fetchPhotos();
+      setSearchClicked(true);
     }
   };
 
@@ -43,9 +51,13 @@ const NewPage = () => {
         <button onClick={handleSearchClick}>Search</button>
       </div>
       <div className='images'>
-        {photos.map((photo) => (
-          <img className="image" key={photo.id} src={photo.src.medium} alt={photo.photographer} />
-        ))}
+        {isLoading ? (
+          <div className="loader">Cargando...</div>
+        ) : (
+          photos.map((photo) => (
+            <img className="image" key={photo.id} src={photo.src.medium} alt={photo.photographer} />
+          ))
+        )}
       </div>
       <div>
         <span>Page: </span>
